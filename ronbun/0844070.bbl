@@ -1,0 +1,37 @@
+\begin{thebibliography}{1}\setlength{\itemsep}{-1ex}\small
+
+\bibitem{Looper09}
+J.~Burnim, N.~Jalbert, C.~Stergiou, and K.~Sen.
+\newblock Looper: Lightweight detection of infinite loops at runtime.
+\newblock In {\em Proceedings of the 2009 IEEE/ACM International Conference on
+  Automated Software Engineering}, ASE '09, pages 161--169, Washington, DC,
+  USA, 2009. IEEE Computer Society.
+
+\bibitem{Jolt11}
+M.~Carbin, S.~Misailovic, M.~Kling, and M.~C. Rinard.
+\newblock Detecting and escaping infinite loops with jolt.
+\newblock In {\em Proceedings of the 25th European conference on
+  Object-oriented programming}, ECOOP'11, pages 609--633, Berlin, Heidelberg,
+  2011. Springer-Verlag.
+
+\bibitem{LoopFiltering11}
+H.~Hayashizaki, P.~Wu, H.~Inoue, M.~J. Serrano, and T.~Nakatani.
+\newblock Improving the performance of trace-based systems by false loop
+  filtering.
+\newblock In {\em Proceedings of the sixteenth international conference on
+  Architectural support for programming languages and operating systems},
+  ASPLOS '11, pages 405--418, New York, NY, USA, 2011. ACM.
+
+\bibitem{Luk:2005:PBC:1064978.1065034}
+C.-K. Luk, R.~Cohn, R.~Muth, H.~Patil, A.~Klauser, G.~Lowney, S.~Wallace, V.~J.
+  Reddi, and K.~Hazelwood.
+\newblock Pin: building customized program analysis tools with dynamic
+  instrumentation.
+\newblock {\em SIGPLAN Not.}, 40:190--200, June 2005.
+
+\bibitem{Tr05}
+N.~Truong, P.~Bancroft, and P.~Roe.
+\newblock Learning to program through the web.
+\newblock {\em SIGCSE Bull.}, 37:9--13, June 2005.
+
+\end{thebibliography}

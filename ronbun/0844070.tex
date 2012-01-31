@@ -1,0 +1,162 @@
+\documentclass[12pt,oneside]{report}
+
+\usepackage[dvips, dvipdfm]{graphicx}
+%\usepackage{latex8}
+\usepackage{epsfig}
+\usepackage{url}
+\usepackage{comment}
+\usepackage{color}
+\usepackage{times}
+\usepackage{suthesis-2e}
+\usepackage{listings}
+\usepackage{verbatim}
+
+\lstset{language=c,
+basicstyle=\footnotesize\ttfamily,
+commentstyle=\textit,
+classoffset=1,
+frame=single,
+numbers=left,
+keywordstyle=\bfseries,
+showstringspaces=false,
+}
+
+\input{dummy.tex}
+
+\begin{document}
+
+\title{無限ループに対応したWebプログラミング教育環境\\Web Programing Environment for Infinite Loop}
+\author{0844070 Taihei Sugimoto}
+\dept{Computer Engineering}
+\principaladviser{Kimio Kuramitsu}
+
+\beforepreface
+\tablespagefalse
+\prefacesection{Abstract}
+
+Write an abstract.
+
+\prefacesection{Acknowledgements}
+
+To write this thesis, many people have helped me.
+
+First, I would like to thank my associated professor Kimio Kuramitsu for giving me chances and teaching me about this study.
+Second, I also thank member of Kuramitsu Laboratory for all. Especially, Alice, who is 1st-year graduate students, taught me basic technical knowledge for this thesis and gave me mental advice.
+Thank you for Ph, D, student Bob who discussed me in many topics.
+Thank you for 2nd-year graduate student, Charlie who always helped me when I write this thesis.
+Thank you for another 1st-year student Dezmond, who gave me several important advice.
+Thank you for all that 4th-year undergraduates Ernesto were my good counselors.
+
+Beside them, thank you for my family and friends. In particular, I would like to thank you for my parents who are bring up me for 23 years.
+
+\afterpreface
+
+\chapter{Introduction}
+\label{intro}
+
+write an Introduction
+
+\chapter{Background}
+\label{background}
+
+近年、Webプログラミング環境が普及している。
+\begin{itemize}
+	\item e.g1)DART:Googleによって開発されたWebプログラミング環境
+	\item e.g2)codepad:13の言語のプログラ厶の実行結果を表示可能なプログラミング環境
+\end{itemize}
+特に、教育を目的に構築されたWebプログラミング環境は大学等において使用されてきており、注目を集めている。
+\begin{itemize}
+\item e.g)ELP:コード解析機能を持ったWebプログラミング教育環境
+	
+	穴埋め形式の授業で用いられている
+\end{itemize}
+我が研究室ではKonohaScript教育用Webプログラミング環境『aspen』を開発し、実際の授業で使用した．
+
+
+\chapter{Problem Statement}
+\label{prom_state}
+
+
+\chapter{Designs}
+\label{design}
+
+write an Designs
+
+\section{Design of A}
+\label{design_a}
+
+write an Design of A
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=150mm]{./image/S_Architechture.eps}
+		\label{fig:Architecture of SEKENS}
+	\end{center}
+	\caption{SEKENS}
+\end{figure}
+
+\section{Design of B}
+\label{design_b}
+
+write an Design of B
+
+\chapter{Imprements}
+\label{impr}
+
+write an Imprements
+
+
+\begin{lstlisting}[label=src1, caption=KonohaScript Code]
+int fib(int n) {
+	if (n < 3) {
+		return 1;
+	}
+	else {
+		return fib(n - 2) + fib(n - 1);
+	}
+}
+print fib(10);
+
+\end{lstlisting}
+
+
+\section{Imprements of A}
+\label{impr_a}
+
+write an Imprement of A
+
+\chapter{Experiments}
+\label{exp}
+
+write an Experiments
+
+\section{Environments and Applications}
+\label{env_app}
+
+write an Environments and Applications
+
+\section{Evaluations}
+\label{eval}
+
+write an Evaluations
+
+\chapter{Related Works}
+\label{related}
+
+write an Related Works
+
+\chapter{Conclusions}
+\label{conc}
+
+write an Conclusions
+
+\section{Future Works}
+\label{future}
+
+write an Future Works
+
+\nocite{*}
+\bibliographystyle{latex8}
+\bibliography{mybib}
+
+\end{document}

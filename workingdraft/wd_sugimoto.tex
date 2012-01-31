@@ -1,0 +1,303 @@
+%  $Description: Author guidelines and sample document in LaTeX 2.09$ 
+%  $Author: ienne $
+%  $Date: 1995/09/15 15:20:59 $
+%  $Revision: 1.4 $
+%
+
+%\documentclass[times,twocolumn,natbib]{article}
+\documentclass[twocolumn]{article}
+\usepackage{latex8}
+\usepackage[dvips,dvipdfm]{graphicx}
+\usepackage{epsfig}
+\usepackage{comment}
+\usepackage{color}
+\usepackage{times}
+\usepackage{listings}
+
+\lstset{language=c,%
+basicstyle=\footnotesize\ttfamily,%
+commentstyle=\textit,%
+classoffset=1,%
+keywordstyle=\bfseries,%
+emphstyle=\underbar,%
+showstringspaces=false,%
+}%
+
+\input{dummy.tex}
+
+%------------------------------------------------------------------------- 
+\begin{document}
+
+\title{
+Webプログラミング教育環境
+SEKENS
+}
+
+\author{
+Taihei Sugimoto \\
+Electronic and Computer Engineering, \\
+Yokohama National University, JAPAN \\
+}
+
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+	本稿では，近年，大学などの教育機関でWebプログラミング教育環境が用いられている．
+	しかし，Webプログラミング教育環境は，
+	ソースコードの引用や評価材料がソースコードのみであることにより，
+	学習者の得点差が表れにくい．
+	結果教育者が，学習者のプログラミングスキルに見合った，
+	正当な評価を行い辛い．
+	そこで我々は，そういった問題を解決するための機能を実装したWebプログラミング教育環境
+	SEKENS(シーケンス，Social Environment for Konoha Education Networking System)
+	を提案する．
+\end{abstract}
+
+%------------------------------------------------------------------------- 
+\section{Introduction}
+\label{Introduction}
+%\noindent {\color{red} Don't remove the parenthesized annotation before submitting.}
+
+(Background)
+近年，大学等の教育機関を中心に，Webプログラミング教育環境が普及している．
+特に，教育者が課題を提示し，学習者がプログラムを作成し提出する形式の授業で用いられることが多い．
+
+一般にWebプログラミング教育環境とは，
+Web上(サーバサイド)に教育対象となる言語の実行環境があり，
+学習者の提出物や提示した課題等をサーバ側で管理するものである．
+Webプログラミング教育環境を使うメリットとして，
+学習者が自己のPCにプログラミング環境を構築する必要がない，
+学習者が他者と自己のソースコードを比較できる，
+紙媒体やメールでの提出形式と比べ，学習者の提出物等のデータをリスト管理しやすい，
+といったものが挙げられる．
+
+実際に，クイーンズランド工科大学では，
+１年生のJavaやC♯の授業でEnvironment for Learning to Program (ELP)\cite{Tr05}
+というWebプログラミング教育環境が使用されている．
+ELPはWeb上にソースコードの穴埋め問題を出し，
+学習者が提出したソースコードを独自のプログラム解析フレームワークによって自動で添削する．
+結果，ソースコードの評価を自動で行えることで，フィードバックを素早く行える等の点で，
+プログラミング教育に役立っている．
+
+しかし，Webプログラミング環境のように他者のソースコードがオープンに公開されている場合，
+他の学習者の記述したソースコードを引用すれば，
+プログラミングの不得意な学習者でも他者と同等の得点を取ることが可能である．
+そこで，ソースコード以外の評価材料を用いる必要が出てきた．
+評価基準がソースコードのみの場合，
+引用したソースコードはもちろん，
+基礎的な演習課題のように，解答がパターン化されているもの
+等は，どの学習者でも同様のソースコードになりやすく，
+学習者の得点がどれも同等のものになることが多いからである．
+
+(Problem)
+結果，Webプログラミング教育環境では，
+教育者がプログラミングが得意な学習者・不得意な学習者の区別が正確に行えない．
+といった，問題が生じる．
+
+(Objective)
+教育者が，プログラミングが得意な学習者・不得意な学習者の区別を正確に行えるための
+Webプログラミング教育環境の構築．
+
+(Proposal)
+そこで我々は，Webプログラミング教育環境
+SEKENS(シーケンス，Social Environment for Konoha Education Networking System)を提案する．
+SEKENSは，ソースコードの引用に制限を加え，ソースコード以外の評価基準を設けることで，
+教育者がプログラミングの得意な学習者・不得意な学習者の区別を行いやすいプログラミング教育環境である．
+
+(Contribution)
+SEKENSが実際のプログラミングの授業の現場で実用されることを目指す．
+
+(RoadMap)
+本論文は次のように構成される.第\ref{ProblemStatement}章では，既存のプログラミング教育環境で生じる問題について述べる．
+第\ref{ProposedMethod}章では，SEKENSの設計方針について述べる．
+第\ref{ImplementationStatus}章では，SEKENSの現在の開発状況について，説明する．
+第\ref{EvaluationAndConsideration}章では，SEKENSの評価方法の予定について述べる．
+第\ref{RelatedWork}章では，関連研究について紹介する．
+第\ref{Conclusion}章で，本論文を総括する．
+
+\section{Problem Statement}
+\label{ProblemStatement}
+Webプログラミング教育環境では，
+他者のソースコードをコピーし，提出を済ませてしまう学習者がいる可能性がある．
+そんな中，ソースコード以外で評価する指標が構築されていなければ，
+ソースコードの内容に違いがない場合，どの学習者も同等の評価をしなければならない．
+そういった場合教育者は，プログラミングが不得意であるため課題を解くことができないために
+他者のソースコードを引用して提出した学習者に気付くことができない．
+
+結果，教育者は，プログラミングの得意な学習者・不得意な学習者を正確に区別できないため，
+正当な評価を行い辛い．
+そのため，学習者のプログラミングスキルに合わせて特別課題の提示や補講等を行う，といったことがし辛い．
+
+\section{SEKENS}
+\label{ProposedMethod}
+
+\subsection{目的}
+\label{PurposeOfSEKENS}
+
+\begin{itemize}
+	\item 引用されたソースコードとそうでないソースコード の区別が可能
+	\item ソースコード 以外の判断基準を設ける
+\end{itemize}
+
+
+といった要求を満たすことで，
+教育者が，プログラミングが得意な学習者・不得意な学習者の区別を正確に行えるための
+Webプログラミング教育環境の構築をすることにした．
+
+\subsection{要求}
+\label{DemandOfSEKENS}
+我々は，SEKENSでは以下の２つの要求を満たすべきであると考える．
+\begin{itemize}
+	\item 引用行為の制限，明示化
+	\item ソースコード以外の評価方法の導入により，
+		学習者間の得点差を大きくする
+\end{itemize}
+
+\subsection{設計}
+\label{ArchitecherOfSEKENS}
+
+%SEKENSでは，他者のプログラムを無断でコピー＆ペースト出来ないようにするために，他者のソースコードの閲覧を不可能にする，といった方法はとらない．なぜなら，他者のソースコードの閲覧を不可能にした場合，学習者は自己と比較して他者のソースコードの良い点を取り入れることができない，自己のソースコードの問題点を見つけることが難しいといった別の問題が発生するからである．
+
+\subsubsection{条件付き引用}
+\label{ForkWithProviso}
+
+SEKENSでは，ソースコードの引用行為自体は禁止していないが，
+以下の条件付き引用を認めるようにしている
+
+\begin{itemize}
+	\item 引用の明示化：他者のソースコードをコピー＆ペーストできないようにし，
+		引用の際には，引用元・引用先の両者に引用した事が分かるようにし，
+		そのソースコードが引用物か否かを判別可能となる形式で引用できるようにする．
+	\item 引用の制限：引用物をそのまま提出することは，
+		無条件でコピー＆ペーストすることと変わりがないため，
+		引用したソースコードにバグを混入したり，一部欠損させることで，それを防いでいる
+\end{itemize}
+
+SEKENSでは，明示的な引用，制限付きで引用することを合わせてforkと呼ぶ．
+
+%尚，課題提出システムにおいては上記のように他人のソースコード引用に制限を設けているが，課題提出以外でプログラミングする場合，特に，他者との共同開発を行う場合等は制限を設けず，merge,fork,といったgitと同等の機能を自由に使えるようにする．
+
+\subsubsection{学習者の評価方法}
+\label{EvaluationMethodOfStudent}
+
+SEKENSでは，ある条件下では引用を許可しているため，
+ソースコードのみの評価材料で学習者の評価を行った場合，
+特にforkされたソースコードとfork元のソースコードの違いが少ない場合，
+学習者の得点差が表れにくいため，以下の評価基準を設けている．
+
+
+\begin{itemize}
+	\item forkの有無：forkは，プログラミングが不得意であり，
+		課題が解けなかった学習者が行うことが多い．
+		そのため，forkの有無を評価基準に含める．
+	\item forkされた数：forkされた数が多いソースコードは可読性が高く，
+		質の高いソースコードである可能性が高いことを利用し，
+		forkされた数が多いソースコードを作成した学習者により高い得点を与えることとする．
+	\item 課題提出までの時間：引用の制限によって，
+		ソースコードをforkしてから提出できる状態にするまでに時間をかけさせることができるため，
+		この評価基準を設けることで，forkを行った学習者とそうでない学習者の間に，
+		forkしたか否かの評価よりも正確な得点差が生じるようにしている．
+		また，コーディングの速度も十分な評価材料となることも考慮している．
+\end{itemize}
+
+
+これにより，
+SEKENSでは，課題提出までに要した時間，
+forkされた数も学習者の評価基準とし，
+より速く提出された物，より多くのユーザにforkされた物に高い得点を与えることとする．
+
+また，SEKENSは静的型付けによるスクリプティング言語Konohaの教育を対象としている．
+Konohaは，幅広い記述ができるため，
+学習者の中にプログラミングが苦手な初学者が多い状況でも評価が行い易いため採用した．
+
+\subsubsection{その他の設計}
+\label{OtherArchitectures}
+\begin{itemize}
+	\item ユーザの情報，ソースコードの情報は登録ユーザなら誰でも閲覧できるようにする．
+	\item ユーザは，TeacherとStudentのどちらかとして登録できることとし，
+		StudentはTeacherのグループに参加すれば，提示された課題を解く事ができ，
+		Teacherの出す課題はStudent全員に一斉に送信されるようにする．
+	\item Teacherが課題を提示すればそのグループに所属する
+		Student側に課題提出用のディレクトリとファイルが
+		自動で作成される．
+	\item グループシステム，課題提示システムはStudent側でも自己のグループを持つことにより行え、
+		学習者間で問題を出したり，共同開発に応用することも可能とする．
+	\item 無条件でコピー＆ペーストができないようにするため，
+		他者のソースコードはテキストでなく，画像データとして表示するようにする．
+	\item forkの引用元・引用先が確認できるよう，
+		forkによる繋がりが分かるようなツリーを作成し，表示できるようにする．
+	\item forkは他者のソースコードディレクトリから行え，
+		forkしたコードは「forked from student A」というようにforkしたことが分かるようにし、
+		fork元となるコードには「forked by 2 students」というように何人の学習者にforkされたか
+		を分かるよう表示する．
+	\item ソースコードの評価の際，「forkした否か，forkされた数，課題提出までに要した時間」が
+		自動的に得点に加えられるようにする．
+	\item GUIの部分はシンプルなものとし，ページ遷移を伴わないようにする．
+\end{itemize}
+
+\section{Implementation Status}
+\label{ImplementationStatus}
+SEKENSの実装は以下の方法で行う．
+\begin{itemize}
+	\item GUI:Ext Js 4.0ライブラリを使用してJavaScript
+	\item ユーザ情報の管理:MySQLをkonohaScriptにバインドしパッケージ化したものを用い，
+		ユーザ名，パスワードや，グループ情報を管理する．
+	\item ユーザのソースコード管理:gitのコマンドを利用する．
+		fork，merge，add，push，pull等を用い，
+		SEKENSでのfork，ソースコードのSave，Load，ユーザ登録時のレポジトリ作成等を行う．
+	\item サーバ側CGIの記述:KonohaScriptを用い，SQLの操作やgitのAPI使用を行う．
+		また，ソースコードの実行でもKonohaScriptのeval関数を呼び出す．
+\end{itemize}
+現在，GUIの部分が概ね実装済みで，
+ユーザ登録や，ソースコードのSave等のUI部分は見掛け上できているが，
+内部的な処理(ユーザ情報とソースコードの管理等)をするための実装をしている．
+また，SEKENSの現在の外観をFigure1に示す．
+
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=80mm]{./fig/SEKENSimg.eps}
+		\label{fig:SEKENS}
+	\end{center}
+	\caption{SEKENS}
+\end{figure}
+
+
+
+\section{Evaluation ＆ Consideration}
+\label{EvaluationAndConsideration}
+
+\section{Related Work}
+\label{RelatedWork}
+本論文では，教育向けWebプログラミング環境を提案した．
+本論文と関連するものとしてクイーンズランド工科大学にて実際に
+１年生のJavaとC♯の授業で使用されているEnvironment for Learning to Program (ELP)\cite{Tr05}がある．
+ELPはWeb上にソースコードの穴埋め問題を出し，
+生徒が解いた物に対して独自のプログラム解析フレームワークによって添削を行い，
+生徒にフィードバックを行う，インタラクティブなWebベースのプログラミング環境である．
+ELPのプログラム解析フレームワークは静的解析と動的解析の２種類に分けられ，
+静的解析ではソースコードの解析を行い，
+ソフトウェアメトリクスや正解となるソースコードとの類似性といった指標をもとにした解析を，
+動的解析ではブラックボックステストとホワイトボックステストを行い，
+それらのテスト結果をもとにした解析を，
+それぞれ行うことで添削を行っている．
+\section{Conclusion}
+\label{Conclusion}
+SEKENSによって，プログラミング学習者の得点差が各々のスキルに応じて表現されることで，
+プログラミングの得意な学習者・不得意な学習者の区別ができるようになることが望ましい．
+また，SEKENS独自の採点方式の信憑性が証明されれば，既存のソースコード自動採点システムと合わせて
+用いることで，学習者の評価を全自動で行うことが可能になる．
+以上のような貢献をすることでプログラミング学習者各々にスキルに応じた指導に繋げられ，
+プログラミング教育の質を向上させることができれば望ましい．
+\section*{Acknowledgment}
+
+
+%--------------------------------------------------------------------------- 
+%\nocite{*}
+
+%\bibliographystyle{abbrvnat}
+\bibliographystyle{latex8}
+\bibliography{mybib}
+
+\end{document}
